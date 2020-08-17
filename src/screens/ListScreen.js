@@ -8,35 +8,57 @@ import {
   ActivityIndicator,
 } from "react-native";
 import ListItem from "../components/ListItem";
-import { ScrollView, TouchableOpacity } from "react-native-gesture-handler";
+import {
+  ScrollView,
+  TouchableOpacity,
+  TextInput,
+} from "react-native-gesture-handler";
 import { WIDTH, HEIGHT } from "../Constants";
+import { FontAwesome5 } from "@expo/vector-icons";
+import { setData, setText, setActiveIndex } from "../actions/PageActions";
 
-export default class ListScreen extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      data: [],
-    };
-  }
+import { connect } from "react-redux";
 
+import axios from "axios";
+
+class ListScreen extends Component {
   componentDidMount = () => {
     this.getDrinksList();
   };
 
   getDrinksList = async () => {
-    try {
-      const response = await fetch(
-        `https://cafe-drinks-api.herokuapp.com/drinks`
-      );
-      const json = await response.json();
-      setTimeout(() => this.setState({ data: json }), 500);
-    } catch (e) {
-      console.warn(e);
-    }
+    axios.get(`https://cafe-drinks-api.herokuapp.com/drinks`).then((res) => {
+      const data = res.data;
+      // console.log(data);
+      this.props.setDataApi(data);
+    });
   };
 
+  search() {
+    const { setIndex, navigation } = this.props;
+    const url = "https://cafe-drinks-api.herokuapp.com/";
+    const filterDrinks = this.props.data.filter((item) => {
+      return item.name.toLowerCase().includes(this.props.text.toLowerCase());
+    });
+    console.log(filterDrinks);
+    return filterDrinks.map((el, i) => (
+      <ListItem
+        key={el + i}
+        price={el.price}
+        name={el.name}
+        picture={`${url + "images/" + el.image}`}
+        describe={"try coffees from Keniya, Ethiopia"}
+        onPress={() => {
+          setIndex(i);
+          navigation.navigate("DetailsScreen");
+        }}
+      />
+    ));
+  }
+
   render() {
-    const { data } = this.state;
+    const { data, navigation, setIndex, text } = this.props;
+    const url = "https://cafe-drinks-api.herokuapp.com/";
     return (
       <ScrollView style={styles.container}>
         <Image style={styles.bg} source={require("../../assets/bg.jpeg")} />
@@ -44,30 +66,37 @@ export default class ListScreen extends Component {
           style={{
             ...StyleSheet.absoluteFillObject,
             flex: 1,
-            alignItems: "flex-end",
+            alignItems: "center",
+            paddingTop: 20,
           }}
         >
-          <TouchableOpacity
-            style={{
-              height: 100,
-              width: 100,
-              backgroundColor: "white",
+          <TextInput
+            style={styles.input}
+            onChangeText={(text) => {
+              this.props.setTextInput(text);
             }}
-          >
-            <Text>asdasdasd</Text>
-          </TouchableOpacity>
+            value={this.props.text.text}
+          />
         </View>
         <View style={styles.block}>
           {data.length > 0 ? (
-            data.map((el, i) => (
-              <ListItem
-                key={el + i}
-                price={el.price}
-                name={el.name}
-                picture={"../../assets/cup.png"}
-                describe={"try coffees from Keniya, Ethiopia"}
-              />
-            ))
+            text ? (
+              this.search()
+            ) : (
+              data.map((el, i) => (
+                <ListItem
+                  key={el + i}
+                  price={el.price}
+                  name={el.name}
+                  picture={`${url + "images/" + el.image}`}
+                  describe={"try coffees from Keniya, Ethiopia"}
+                  onPress={() => {
+                    setIndex(i);
+                    navigation.navigate("DetailsScreen");
+                  }}
+                />
+              ))
+            )
           ) : (
             <View
               style={{
@@ -84,6 +113,21 @@ export default class ListScreen extends Component {
     );
   }
 }
+
+const mapStateToProps = (store) => {
+  return {
+    text: store.text.text,
+    data: store.data.data,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    setTextInput: (text) => dispatch(setText(text)),
+    setDataApi: (data) => dispatch(setData(data)),
+    setIndex: (index) => dispatch(setActiveIndex(index)),
+  };
+};
 
 const styles = StyleSheet.create({
   container: {
@@ -103,5 +147,20 @@ const styles = StyleSheet.create({
     borderBottomRightRadius: 30,
     width: WIDTH,
     height: 250,
+    opacity: 0.4,
+  },
+  input: {
+    height: 40,
+    borderColor: "#533A20",
+    borderWidth: 1,
+    color: "#fff",
+    margin: 20,
+    width: "90%",
+    backgroundColor: "#CE9660",
+    opacity: 0.9,
+    padding: 10,
+    borderRadius: 50,
   },
 });
+
+export default connect(mapStateToProps, mapDispatchToProps)(ListScreen);

@@ -1,16 +1,23 @@
 import React, { Component } from "react";
 import { StyleSheet, Text, View, Image, TouchableOpacity } from "react-native";
+import { useNavigation } from "@react-navigation/native";
 
-export default class ListItem extends Component {
+class ListItem extends Component {
   constructor(props) {
     super(props);
     this.url = this.props.picture;
   }
   render() {
+    const { onPress } = this.props;
     return (
-      <TouchableOpacity style={styles.container}>
+      <TouchableOpacity style={styles.container} onPress={onPress}>
         <View style={styles.block}>
-          <Image style={styles.icon} source={require(`../../assets/cup.png`)} />
+          <Image
+            style={styles.icon}
+            source={{
+              uri: this.url,
+            }}
+          />
         </View>
         <View
           style={{
@@ -43,14 +50,16 @@ const styles = StyleSheet.create({
     height: 200,
     borderRadius: 20,
     margin: 20,
+    elevation: 10,
   },
   title: {
     color: "#fff",
-    fontSize: 17,
+    fontSize: 15,
   },
   icon: {
-    width: 120,
+    width: 130,
     height: 120,
+    opacity: 0.8,
   },
   block: {
     alignItems: "center",
@@ -61,7 +70,7 @@ const styles = StyleSheet.create({
     fontSize: 25,
   },
   priceImg: {
-    width: 50,
+    width: 40,
     height: 30,
     opacity: 0.5,
   },
@@ -72,3 +81,11 @@ const styles = StyleSheet.create({
     fontWeight: "700",
   },
 });
+
+// export default function (props) {
+//   const navigation = useNavigation();
+
+//   return <ListItem {...props} navigation={navigation} />;
+// }
+
+export default ListItem;
