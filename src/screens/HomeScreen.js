@@ -18,23 +18,22 @@ export default class HomeScreen extends Component {
             <Text style={styles.text}>COFFE SHOP</Text>
           </View>
           <View style={{ marginTop: 200 }}>
-            <TouchableOpacity
-              activeOpacity={1}
+            <Ripple
+              rippleSize={0}
+              rippleContainerBorderRadius={8}
               style={styles.button}
               onPress={() => this.props.navigation.navigate("ListScreen")}
             >
-              <Ripple>
-                <Text style={styles.buttonText}>Get coffee</Text>
-              </Ripple>
-            </TouchableOpacity>
-
-            <TouchableOpacity
-              activeOpacity={1}
+              <Text style={styles.buttonText}>Get coffee</Text>
+            </Ripple>
+            <Ripple
+              rippleSize={0}
               style={styles.button}
               onPress={() => this.props.navigation.navigate("AuthScreen")}
             >
               <Text style={styles.buttonText}>Autorization</Text>
-            </TouchableOpacity>
+            </Ripple>
+
             <TouchableOpacity
               style={styles.contacts}
               onPress={() => this.props.navigation.navigate("ContactsScreen")}
@@ -71,7 +70,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#533A20",
     padding: 20,
     width: 250,
-    borderRadius: 50,
+    borderRadius: 8,
     marginTop: 20,
   },
   buttonText: {

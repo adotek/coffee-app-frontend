@@ -15,7 +15,13 @@ import {
 } from "react-native-gesture-handler";
 import { WIDTH, HEIGHT } from "../Constants";
 import { FontAwesome5 } from "@expo/vector-icons";
-import { setData, setText, setActiveIndex } from "../actions/PageActions";
+import {
+  setData,
+  setText,
+  setActiveIndex,
+  setCount,
+  setPrice,
+} from "../actions/PageActions";
 
 import { connect } from "react-redux";
 
@@ -57,7 +63,14 @@ class ListScreen extends Component {
   }
 
   render() {
-    const { data, navigation, setIndex, text } = this.props;
+    const {
+      data,
+      navigation,
+      setIndex,
+      text,
+      setCounter,
+      setPricing,
+    } = this.props;
     const url = "https://cafe-drinks-api.herokuapp.com/";
     return (
       <ScrollView style={styles.container}>
@@ -92,6 +105,8 @@ class ListScreen extends Component {
                   describe={"try coffees from Keniya, Ethiopia"}
                   onPress={() => {
                     setIndex(i);
+                    setCounter(1);
+                    setPricing(0);
                     navigation.navigate("DetailsScreen");
                   }}
                 />
@@ -118,6 +133,8 @@ const mapStateToProps = (store) => {
   return {
     text: store.text.text,
     data: store.data.data,
+    price: store.payData.price,
+    count: store.payData.count,
   };
 };
 
@@ -126,6 +143,8 @@ const mapDispatchToProps = (dispatch) => {
     setTextInput: (text) => dispatch(setText(text)),
     setDataApi: (data) => dispatch(setData(data)),
     setIndex: (index) => dispatch(setActiveIndex(index)),
+    setCounter: (count) => dispatch(setCount(count)),
+    setPricing: (price) => dispatch(setPrice(price)),
   };
 };
 

@@ -7,7 +7,7 @@ import { connect } from "react-redux";
 
 class PayScreen extends Component {
   render() {
-    const { data, activeIndex, pay } = this.props;
+    const { data, activeIndex, activeSize, count, price } = this.props;
     return (
       <View style={styles.container}>
         <View
@@ -44,7 +44,7 @@ class PayScreen extends Component {
                 }}
               >
                 <Text style={styles.line}>Size: </Text>
-                <Text style={styles.size}>{pay.sizeName}</Text>
+                <Text style={styles.size}>{activeSize}</Text>
               </View>
               <View
                 style={{
@@ -55,7 +55,7 @@ class PayScreen extends Component {
                 }}
               >
                 <Text style={styles.line}>Count: </Text>
-                <Text style={styles.count}>{pay.conter}</Text>
+                <Text style={styles.count}>{count}</Text>
               </View>
             </View>
             <View
@@ -77,7 +77,9 @@ class PayScreen extends Component {
                 }}
               >
                 <Text style={styles.line}>Price: </Text>
-                <Text style={styles.price}>{pay.pricing} $</Text>
+                <Text style={styles.price}>
+                  {`${(price * count).toFixed(2)} $`}
+                </Text>
               </View>
             </View>
           </View>
@@ -154,7 +156,9 @@ const styles = StyleSheet.create({
 const mapStateToProps = (state) => ({
   data: state.data.data,
   activeIndex: state.data.activeIndex,
-  pay: state.payData.pay,
+  price: state.payData.price,
+  activeSize: state.payData.activeSize,
+  count: state.payData.count,
 });
 
 export default connect(mapStateToProps)(PayScreen);

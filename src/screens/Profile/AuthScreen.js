@@ -39,6 +39,7 @@ export default class AuthScreen extends Component {
               // value={""}
             />
             <TextInput
+              secureTextEntry
               style={styles.input}
               onChangeText={(text) => {
                 // console.log(text);
