@@ -29,7 +29,7 @@
  └──────────────────────────────────────────────────────────
 ```
 
-All information about using, you can fing in [our wiki](https://github.com/truapps/coffee-app-frontend/wiki)
+All information about using, you can fing in [our wiki](https://github.com/truapps/Coffee-App-Frontend/wiki)
 
 ---
 
@@ -37,4 +37,4 @@ All information about using, you can fing in [our wiki](https://github.com/truap
 
 Coffee Shop is MIT licensed, as found in the [LICENSE][l] file.
 
-[l]: https://github.com/truapps/coffee-app-frontend/blob/master/LICENSE
+[l]: https://github.com/truapps/Coffee-App-Frontend/blob/master/LICENSE
