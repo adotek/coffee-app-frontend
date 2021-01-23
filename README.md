@@ -7,6 +7,7 @@
 - [Node.js](https://github.com/nodejs/node)
 - [Axios](https://github.com/axios/axios)
 - [React Native](https://github.com/facebook/react-native)
+- [Expo](https://github.com/expo/expo)
 
 ---
 
