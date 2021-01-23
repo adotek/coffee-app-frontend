@@ -2,8 +2,6 @@
     Coffee shop Front-end
 </h1>
 
----
-
 ## Technologies
 
 - [Node.js](https://github.com/nodejs/node)
@@ -22,10 +20,10 @@
  │   └── 📁 src              App root
  │       ├── 💽 actions      Assets
  │       ├── 📚 components   Basic application components
- │       ├── 🎨 reducers     Reducers
- │       ├── 🎨 store        Redux store
- │       ├── 🎨 navigators   App navigation
- │       ├── 🎨 Constant.js  Static constants
+ │       ├── 🎲 reducers     Reducers
+ │       ├── 🆔 store        Redux store
+ │       ├──  📍 navigators   App navigation
+ │       ├── 🚧 Constant.js  Static constants
  │       └── 🗂️ screens      Route pages
  └──────────────────────────────────────────────────────────
 ```
